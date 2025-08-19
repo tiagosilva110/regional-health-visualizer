@@ -1,0 +1,2 @@
+FLASK_APP=rhv.py
+FLASK_DEBUG=1
