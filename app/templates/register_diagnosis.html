@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Essa pagina esta destinada ao registro de diagnosticos</h1>
+    {% for i in texto: %}
+    <h1>{{ i }}</h1>
+    {% endfor %}    
 {% endblock%}
