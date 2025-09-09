@@ -30,5 +30,6 @@ class Consulta(db.Model):
 
 class Diagnostico(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    # localização String
     # FK id_consulta
     # FK UM
