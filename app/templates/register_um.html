@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% import "bootsrap_wtf.html" as wtf %}
 
 {% block content %}
-    <h1>Essa pagina esta destinada ao cadastro da unidade médica</h1>
+    <h1>Register</h1>
+    {{ wtf.quick_form(form) }}
 {% endblock%}
