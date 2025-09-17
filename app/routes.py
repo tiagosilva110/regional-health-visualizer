@@ -9,7 +9,6 @@ from app.forms import LoginForm, RegistrationForm
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
     return render_template("index.html")
 
@@ -28,7 +27,7 @@ def login():
         if not next_page or urlsplit(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
-    return render_template("login_um.html", title='Sign in', form=form)
+    return render_template("login.html", title='Sign in', form=form)
 
 @app.route("/register")
 def register():
@@ -43,4 +42,4 @@ def register():
         flash('Congrats, now you are registered!')
         return redirect(url_for('login'))
 
-    return render_template("register_um.html", title="Register", form=form)
+    return render_template("register.html", title="Register", form=form)
