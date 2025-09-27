@@ -6,7 +6,7 @@
         {{ form.hidden_tag() }}
         <div>
             {{ form.username.label }}</br>
-            {{ form.username(size=64) }}
+            {{ form.username(size=32) }}
             {% for error in form.username.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
@@ -14,21 +14,21 @@
         <div>
             {{ form.cep.label }}</br>
             {{ form.cep(size=9) }}
-            {% for error in form.username.errors %}
+            {% for error in form.cep.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         <div>
             {{ form.password.label }}</br>
             {{ form.password(size=32) }}
-            {% for error in form.username.errors %}
+            {% for error in form.password.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         <div>
             {{ form.password2.label }}</br>
             {{ form.password2(size=32) }}
-            {% for error in form.username.errors %}
+            {% for error in form.password2.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>

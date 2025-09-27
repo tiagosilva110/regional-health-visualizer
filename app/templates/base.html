@@ -108,8 +108,18 @@
   <nav>
     <a href="{{ url_for('index') }}">Início</a>
     <a href="{{ url_for('login') }}">Login</a>
-  </nav>
+    {% if not current_user.is_anonymous %}
+    <a href="">VOCE ESTA LOGADO</a>
+    {% endif %}
 
+  </nav>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
 
     <footer>

@@ -2,11 +2,11 @@
 
 {% block content %}
     <h1>Login</h1>
-    <form method="POST" action="{{ url_for('register')}}">
+    <form method="POST" action="{{ url_for('login')}}">
         {{ form.hidden_tag() }}
         <div>
             {{ form.username.label }}</br>
-            {{ form.username(size=64) }}
+            {{ form.username(size=32) }}
             {% for error in form.username.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
@@ -14,7 +14,7 @@
         <div>
             {{ form.password.label }}</br>
             {{ form.password(size=32) }}
-            {% for error in form.username.errors %}
+            {% for error in form.password.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>

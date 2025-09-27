@@ -20,7 +20,7 @@ class RegistrationForm(FlaskForm):
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
-    def validade_username(self, username):
+    def validate_username(self, username):
         user = db.session.scalar(sa.select(UM).where(UM.name == username.data))
         if user is not None:
             raise ValidationError('Please use a diffrent medical unit name')
