@@ -109,7 +109,7 @@
     <a href="{{ url_for('index') }}">Início</a>
     <a href="{{ url_for('login') }}">Login</a>
     {% if not current_user.is_anonymous %}
-    <a href="">VOCE ESTA LOGADO</a>
+    <a href="{{ url_for('regperson')}}">Paciente</a>
     {% endif %}
 
   </nav>
