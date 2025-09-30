@@ -3,9 +3,9 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db
 import sqlalchemy as sa
-from app.models import UM
+from app.models import UM, Pessoa
 from urllib.parse import urlsplit
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, RegisterPerson
 
 @app.route('/')
 @app.route('/index')
@@ -41,3 +41,21 @@ def register():
         return redirect(url_for('login'))
 
     return render_template("register.html", title="Register", form=form)
+
+@login_required
+@app.route("/reg-person", methods=['GET', 'POST'])
+def regperson():
+    form = RegisterPerson()
+    if form.validate_on_submit():
+        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data)
+        db.session.add(person)
+        db.session.commit()
+        flash('New person enry!')
+        return redirect(url_for('regperson'))
+
+    return render_template("register_pacient.html", title="Pacient", form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
