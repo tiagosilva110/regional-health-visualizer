@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Register</h1>
-    <form method="POST" action="{{ url_for('register')}}">
+    <form method="POST" action="{{ url_for('register') }}">
         {{ form.hidden_tag() }}
         <div>
             {{ form.username.label }}</br>
@@ -13,7 +13,7 @@
         </div>
         <div>
             {{ form.cep.label }}</br>
-            {{ form.cep(size=9) }}
+            {{ form.cep(size=8) }}
             {% for error in form.cep.errors %}
                 <span>{{ error }}</span>
             {% endfor %}

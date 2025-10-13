@@ -7,14 +7,13 @@ from app import db, app, login
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from flask_login import UserMixin
-
+from sqlalchemy import ForeignKey
     
 class UM(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(32))
-    cep: so.Mapped[str] = so.mapped_column(sa.String(32))
+    cep: so.Mapped[str] = so.mapped_column(sa.String(8))
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
-
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -25,9 +24,11 @@ class UM(UserMixin, db.Model):
 class Pessoa(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(32))
-    date_nasc: so.Mapped[datetime] = so.mapped_column()
-    cep: so.Mapped[str] = so.mapped_column(sa.String(32))
-    
+    birth: so.Mapped[datetime.date] = so.mapped_column(sa.Date)
+    sex: so.Mapped[str] = so.mapped_column(sa.String(1))
+    cep: so.Mapped[str] = so.mapped_column(sa.String(8))
+    um_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
+
 class Consulta(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     date: so.Mapped[datetime] = so.mapped_column()

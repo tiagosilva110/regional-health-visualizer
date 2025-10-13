@@ -27,6 +27,7 @@ class RegistrationForm(FlaskForm):
         
 class RegisterPerson(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    cep = StringField('CEP', validators=[DataRequired()])
+    cep = StringField('CEP (Only Numbers example: 13188888)', validators=[DataRequired()])
     birth = DateField('Birth Date', format='%Y-%m-%d', validators=[DataRequired()])
+    sex = StringField('Sex (M,F or O)', validators=[DataRequired()])
     submit = SubmitField('Register')

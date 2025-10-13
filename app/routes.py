@@ -47,7 +47,7 @@ def register():
 def regperson():
     form = RegisterPerson()
     if form.validate_on_submit():
-        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data)
+        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
         db.session.add(person)
         db.session.commit()
         flash('New person enry!')
