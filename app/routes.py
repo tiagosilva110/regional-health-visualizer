@@ -5,7 +5,7 @@ from app import app, db
 import sqlalchemy as sa
 from app.models import UM, Pessoa
 from urllib.parse import urlsplit
-from app.forms import LoginForm, RegistrationForm, RegisterPerson
+from app.forms import LoginForm, RegisterMedic, RegistrationForm, RegisterPerson
 
 @app.route('/')
 @app.route('/index')
@@ -54,6 +54,32 @@ def regperson():
         return redirect(url_for('regperson'))
 
     return render_template("register_pacient.html", title="Pacient", form=form)
+
+@login_required
+@app.route("/reg-medic", methods=['GET', 'POST'])
+def regperson():
+    form = RegisterMedic()
+    if form.validate_on_submit():
+        person = Pessoa(name=form.name.data, id=current_user.id)
+        db.session.add(person)
+        db.session.commit()
+        flash('New person enry!')
+        return redirect(url_for('regperson'))
+
+    return render_template("register_pacient.html", title="Pacient", form=form)
+
+@login_required
+@app.route("/consult", methods=['GET', 'POST'])
+def regperson():
+    '''form = RegisterPerson()
+    if form.validate_on_submit():
+        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
+        db.session.add(person)
+        db.session.commit()
+        flash('New person enry!')
+        return redirect(url_for('regperson'))'''
+
+    return render_template("register_consulta.html", title="Consulta")
 
 @app.route("/logout")
 def logout():

@@ -20,6 +20,11 @@ class UM(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
+class Medico(db.Model):
+    crm: so.Mapped[str] = so.mapped_column(sa.String(16), primary_key=True)
+    name: so.Mapped[str] = so.mapped_column(sa.String(32))
+    um_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
 
 class Pessoa(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
@@ -32,14 +37,13 @@ class Pessoa(db.Model):
 class Consulta(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     date: so.Mapped[datetime] = so.mapped_column()
-    # FK id_medico:
-    # FK id_pessoa:
+    medico_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
+    pessoa_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
 
 class Diagnostico(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    # localização String
-    # FK id_consulta
-    # FK UM
+    coord: so.Mapped[str] = so.mapped_column(sa.String(32))
+    consulta_id: so.Mapped[int] = so.mapped_column(ForeignKey("Consulta.id", nullable=True))
 
 @login.user_loader
 def load_user(id):

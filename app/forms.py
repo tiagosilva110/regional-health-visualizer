@@ -31,3 +31,6 @@ class RegisterPerson(FlaskForm):
     birth = DateField('Birth Date', format='%Y-%m-%d', validators=[DataRequired()])
     sex = StringField('Sex (M,F or O)', validators=[DataRequired()])
     submit = SubmitField('Register')
+
+class RegisterMedic(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
