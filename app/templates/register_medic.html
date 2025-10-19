@@ -12,23 +12,9 @@
             {% endfor %}
         </div>
         <div>
-            {{ form.birth.label }}</br>
-            {{ form.birth() }}
-            {% for error in form.birth.errors %}
-                <span>{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div>
-            {{ form.cep.label }}</br>
-            {{ form.cep(size=8) }}
-            {% for error in form.cep.errors %}
-                <span>{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div>
-            {{ form.sex.label }}</br>
-            {{ form.sex(size=1) }}
-            {% for error in form.sex.errors %}
+            {{ form.crm.label }}</br>
+            {{ form.crm() }}
+            {% for error in form.crm.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>

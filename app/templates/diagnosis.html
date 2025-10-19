@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form method="POST" action="{{ url_for('regconsult') }}">
+        {{ form.hidden_tag() }}
+    
+        
+        {{ form.submit() }}
+        
+    </form>
+{% endblock%}

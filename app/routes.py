@@ -47,7 +47,7 @@ def register():
 def regperson():
     form = RegisterPerson()
     if form.validate_on_submit():
-        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
+        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data)
         db.session.add(person)
         db.session.commit()
         flash('New person enry!')
@@ -57,27 +57,27 @@ def regperson():
 
 @login_required
 @app.route("/reg-medic", methods=['GET', 'POST'])
-def regperson():
+def regmedic():
     form = RegisterMedic()
     if form.validate_on_submit():
-        person = Pessoa(name=form.name.data, id=current_user.id)
+        person = Pessoa(name=form.name.data, crm=form.crm.data)
         db.session.add(person)
         db.session.commit()
         flash('New person enry!')
         return redirect(url_for('regperson'))
 
-    return render_template("register_pacient.html", title="Pacient", form=form)
+    return render_template("register_medic.html", title="Pacient", form=form)
 
 @login_required
 @app.route("/consult", methods=['GET', 'POST'])
-def regperson():
-    '''form = RegisterPerson()
+def regconsult():
+    form = RegisterPerson()
     if form.validate_on_submit():
         person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
         db.session.add(person)
         db.session.commit()
         flash('New person enry!')
-        return redirect(url_for('regperson'))'''
+        return redirect(url_for('regperson'))
 
     return render_template("register_consulta.html", title="Consulta")
 

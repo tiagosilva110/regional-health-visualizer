@@ -34,3 +34,5 @@ class RegisterPerson(FlaskForm):
 
 class RegisterMedic(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
+    crm = StringField('Crm', validators=[DataRequired()])
+    submit = SubmitField('Register')

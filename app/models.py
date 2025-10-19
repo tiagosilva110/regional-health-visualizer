@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 from time import time
-from datetime import datetime, timezone
+from datetime import datetime, date
 from typing import Optional
 import sqlalchemy.orm as so
 from app import db, app, login
@@ -10,6 +10,7 @@ from flask_login import UserMixin
 from sqlalchemy import ForeignKey
     
 class UM(UserMixin, db.Model):
+    __tablename__ = 'um'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(32))
     cep: so.Mapped[str] = so.mapped_column(sa.String(8))
@@ -22,11 +23,13 @@ class UM(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
     
 class Medico(db.Model):
+    __tablename__ = 'medico'
     crm: so.Mapped[str] = so.mapped_column(sa.String(16), primary_key=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(32))
     um_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
 
 class Pessoa(db.Model):
+    __tablename__ = 'pessoa'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(32))
     birth: so.Mapped[datetime.date] = so.mapped_column(sa.Date)
@@ -34,16 +37,21 @@ class Pessoa(db.Model):
     cep: so.Mapped[str] = so.mapped_column(sa.String(8))
     um_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
 
-class Consulta(db.Model):
+class Doenca(db.Model):
+    __tablename__ = 'doenca'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    date: so.Mapped[datetime] = so.mapped_column()
-    medico_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
-    pessoa_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
+    tipo: so.Mapped[str] = so.mapped_column(sa.String(32))
+
+    def getById(id):
+        return None
 
 class Diagnostico(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    date: so.Mapped[datetime.date] = so.mapped_column(sa.Date)
+    medico_crm: so.Mapped[int] = so.mapped_column(ForeignKey("medico.crm"), nullable=True)
+    pessoa_id: so.Mapped[int] = so.mapped_column(ForeignKey("pessoa.id"), nullable=True)
     coord: so.Mapped[str] = so.mapped_column(sa.String(32))
-    consulta_id: so.Mapped[int] = so.mapped_column(ForeignKey("Consulta.id", nullable=True))
+    id_doenca: so.Mapped[int] = so.mapped_column(ForeignKey("doenca.id"),nullable=True)
 
 @login.user_loader
 def load_user(id):
