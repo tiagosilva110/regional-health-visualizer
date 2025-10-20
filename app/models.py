@@ -46,6 +46,7 @@ class Doenca(db.Model):
         return None
 
 class Diagnostico(db.Model):
+    __tablename__ = 'diagnostico'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     date: so.Mapped[datetime.date] = so.mapped_column(sa.Date)
     medico_crm: so.Mapped[int] = so.mapped_column(ForeignKey("medico.crm"), nullable=True)

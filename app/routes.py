@@ -3,9 +3,9 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db
 import sqlalchemy as sa
-from app.models import UM, Pessoa
+from app.models import UM, Pessoa, Medico, Diagnostico, Doenca
 from urllib.parse import urlsplit
-from app.forms import LoginForm, RegisterMedic, RegistrationForm, RegisterPerson
+from app.forms import LoginForm, RegisterMedic, RegistrationForm, RegisterPerson, RegisterDiagnosis, RegisterDisease
 
 @app.route('/')
 @app.route('/index')
@@ -53,25 +53,25 @@ def regperson():
         flash('New person enry!')
         return redirect(url_for('regperson'))
 
-    return render_template("register_pacient.html", title="Pacient", form=form)
+    return render_template("register_pacient.html", title="Register Pacient", form=form)
 
 @login_required
 @app.route("/reg-medic", methods=['GET', 'POST'])
 def regmedic():
     form = RegisterMedic()
     if form.validate_on_submit():
-        person = Pessoa(name=form.name.data, crm=form.crm.data)
-        db.session.add(person)
+        medico = Medico(name=form.name.data, crm=form.crm.data)
+        db.session.add(medico)
         db.session.commit()
-        flash('New person enry!')
+        flash('New medic enry!')
         return redirect(url_for('regperson'))
 
-    return render_template("register_medic.html", title="Pacient", form=form)
+    return render_template("register_medic.html", title="Register Medic", form=form)
 
 @login_required
 @app.route("/consult", methods=['GET', 'POST'])
 def regconsult():
-    form = RegisterPerson()
+    form = RegisterDiagnosis()
     if form.validate_on_submit():
         person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
         db.session.add(person)

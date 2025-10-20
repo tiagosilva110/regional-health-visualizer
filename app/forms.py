@@ -36,3 +36,13 @@ class RegisterMedic(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     crm = StringField('Crm', validators=[DataRequired()])
     submit = SubmitField('Register')
+
+class RegisterDiagnosis(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    crm = StringField('Crm', validators=[DataRequired()])
+    submit = SubmitField('Register')
+
+class RegisterDisease(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    crm = StringField('Crm', validators=[DataRequired()])
+    submit = SubmitField('Register')
