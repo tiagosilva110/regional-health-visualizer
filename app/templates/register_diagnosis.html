@@ -2,9 +2,15 @@
 
 {% block content %}
     <h1>Register</h1>
-    <form method="POST" action="{{ url_for('regconsult') }}">
+    <form method="POST" action="{{ url_for('regdiagnosis') }}">
         {{ form.hidden_tag() }}
-    
+        <div>
+            {{ form.name.label }}</br>
+            {{ form.name(size=32) }}
+            {% for error in form.name.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
         
         {{ form.submit() }}
         

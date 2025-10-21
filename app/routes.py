@@ -60,7 +60,7 @@ def regperson():
 def regmedic():
     form = RegisterMedic()
     if form.validate_on_submit():
-        medico = Medico(name=form.name.data, crm=form.crm.data)
+        medico = Medico(name=form.name.data, crm=form.crm.data, um_id=current_user.id)
         db.session.add(medico)
         db.session.commit()
         flash('New medic enry!')
@@ -70,7 +70,20 @@ def regmedic():
 
 @login_required
 @app.route("/consult", methods=['GET', 'POST'])
-def regconsult():
+def regdiagnosis():
+    form = RegisterDiagnosis()
+    if form.validate_on_submit():
+        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
+        db.session.add(person)
+        db.session.commit()
+        flash('New person enry!')
+        return redirect(url_for('regperson'))
+
+    return render_template("register_consulta.html", title="Consulta")
+
+@login_required
+@app.route("/consult", methods=['GET', 'POST'])
+def regdisease():
     form = RegisterDiagnosis()
     if form.validate_on_submit():
         person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
