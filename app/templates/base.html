@@ -106,16 +106,17 @@
   </header>
 
   <nav>
-    <a href="{{ url_for('index') }}">Início</a>
-    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('index') }}">Home</a>
     {% if not current_user.is_anonymous %}
-    <a href="{{ url_for('regperson')}}">Paciente</a>
-    <a href="{{ url_for('regdiagnosis')}}">Diagnostico</a>
-    <a href="{{ url_for('regdisease')}}">Doenca</a>
-    <a href="{{ url_for('regmedic')}}">Medico</a>
-    <a href="{{ url_for('regconsult')}}">Consulta</a>
+    <a href="{{ url_for('regperson')}}">Register pacient</a>
+    <a href="{{ url_for('regdiagnosis')}}">Register diagnosis</a>
+    <a href="{{ url_for('regdisease')}}">Register disease</a>
+    <a href="{{ url_for('regmedic')}}">Register medic</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
     {% endif %}
-
+    {% if current_user.is_anonymous %}
+    <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
   </nav>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -127,7 +128,7 @@
     {% block content %}{% endblock %}
 
     <footer>
-    © 2025 — Unidade Médica Central
+    © 2025 — UNASP campus hortolândia
     </footer>
 </body>
 </html>

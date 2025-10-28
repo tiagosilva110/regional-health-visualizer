@@ -13,7 +13,7 @@ class UM(UserMixin, db.Model):
     __tablename__ = 'um'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(32))
-    cep: so.Mapped[str] = so.mapped_column(sa.String(8))
+    state: so.Mapped[str] = so.mapped_column(sa.String(2))
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
 
     def set_password(self, password):
@@ -34,7 +34,7 @@ class Pessoa(db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(32))
     birth: so.Mapped[datetime.date] = so.mapped_column(sa.Date)
     sex: so.Mapped[str] = so.mapped_column(sa.String(1))
-    cep: so.Mapped[str] = so.mapped_column(sa.String(8))
+    state: so.Mapped[str] = so.mapped_column(sa.String(2))
     um_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
 
 class Doenca(db.Model):
@@ -51,8 +51,7 @@ class Diagnostico(db.Model):
     date: so.Mapped[datetime.date] = so.mapped_column(sa.Date)
     medico_crm: so.Mapped[int] = so.mapped_column(ForeignKey("medico.crm"), nullable=True)
     pessoa_id: so.Mapped[int] = so.mapped_column(ForeignKey("pessoa.id"), nullable=True)
-    coord: so.Mapped[str] = so.mapped_column(sa.String(32))
-    id_doenca: so.Mapped[int] = so.mapped_column(ForeignKey("doenca.id"),nullable=True)
+    doenca_id: so.Mapped[int] = so.mapped_column(ForeignKey("doenca.id"),nullable=True)
 
 @login.user_loader
 def load_user(id):

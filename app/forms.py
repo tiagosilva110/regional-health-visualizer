@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField('Medical Unit', validators=[DataRequired()])
-    cep = StringField('CEP', validators=[DataRequired()])
+    cep = StringField('CEP (Only Numbers example: 13188888)', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
@@ -27,7 +27,7 @@ class RegistrationForm(FlaskForm):
         
 class RegisterPerson(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    cep = StringField('CEP (Only Numbers example: 13188888)', validators=[DataRequired()])
+    state = StringField('State (example: SP)', validators=[DataRequired()])
     birth = DateField('Birth Date', format='%Y-%m-%d', validators=[DataRequired()])
     sex = StringField('Sex (M,F or O)', validators=[DataRequired()])
     submit = SubmitField('Register')
@@ -39,10 +39,9 @@ class RegisterMedic(FlaskForm):
 
 class RegisterDiagnosis(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    crm = StringField('Crm', validators=[DataRequired()])
+    medico_crm = StringField('Crm', validators=[DataRequired()])
     submit = SubmitField('Register')
 
 class RegisterDisease(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    crm = StringField('Crm', validators=[DataRequired()])
-    submit = SubmitField('Register')
+    type = StringField('Type', validators=[DataRequired()])
+    

@@ -64,33 +64,33 @@ def regmedic():
         db.session.add(medico)
         db.session.commit()
         flash('New medic enry!')
-        return redirect(url_for('regperson'))
+        return redirect(url_for('regmedic'))
 
     return render_template("register_medic.html", title="Register Medic", form=form)
 
 @login_required
-@app.route("/consult", methods=['GET', 'POST'])
+@app.route("/reg-diagnosis", methods=['GET', 'POST'])
 def regdiagnosis():
     form = RegisterDiagnosis()
     if form.validate_on_submit():
-        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
-        db.session.add(person)
+        diagnosis = Diagnostico(date=form.date.data, crm=form.medico_crm.data)
+        db.session.add(diagnosis)
         db.session.commit()
-        flash('New person enry!')
-        return redirect(url_for('regperson'))
+        flash('New diagnosis enry!')
+        return redirect(url_for('regdiagnosis'))
 
-    return render_template("register_consulta.html", title="Consulta")
+    return render_template("register_consulta.html", title="Diagnostico")
 
 @login_required
-@app.route("/consult", methods=['GET', 'POST'])
+@app.route("/reg-disease", methods=['GET', 'POST'])
 def regdisease():
-    form = RegisterDiagnosis()
+    form = RegisterDisease()
     if form.validate_on_submit():
-        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
-        db.session.add(person)
+        doenca = Doenca(type=form.type.data)
+        db.session.add(doenca)
         db.session.commit()
-        flash('New person enry!')
-        return redirect(url_for('regperson'))
+        flash('New disease enry!')
+        return redirect(url_for('regdisease'))
 
     return render_template("register_consulta.html", title="Consulta")
 
