@@ -74,7 +74,7 @@
       padding: 2.5rem;
       text-align: center;
       box-shadow: 0 20px 40px rgba(178,34,34,0.2);
-      border: 1px solid rgba(178,34,34,0.15);
+      border: 1px solid #b2222226;
     }
 
     .card h2 {
@@ -98,6 +98,52 @@
       margin-top: 2rem;
       font-size: 0.9rem;
     }
+    table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+caption {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+thead th {
+    background-color: #ff000026;
+    color: rgb(0, 0, 0);
+    padding: 12px;
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+th, td {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+}
+
+tfoot td {
+    background-color: #000000;
+    color: white;
+    font-weight: bold;
+    text-align: right;
+    padding: 12px;
+}
+
+tfoot td:first-child {
+    text-align: left;
+}
   </style>
 <body>
     <header>
@@ -112,6 +158,7 @@
     <a href="{{ url_for('regdiagnosis')}}">Register diagnosis</a>
     <a href="{{ url_for('regdisease')}}">Register disease</a>
     <a href="{{ url_for('regmedic')}}">Register medic</a>
+    <a href="{{ url_for('umdata')}}">Pacients Controller</a>
     <a href="{{ url_for('logout') }}">Logout</a>
     {% endif %}
     {% if current_user.is_anonymous %}

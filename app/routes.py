@@ -33,7 +33,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = UM(name=form.username.data, cep=form.cep.data)
+        user = UM(name=form.username.data, state=form.state.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -47,7 +47,7 @@ def register():
 def regperson():
     form = RegisterPerson()
     if form.validate_on_submit():
-        person = Pessoa(name=form.name.data,cep=form.cep.data,birth=form.birth.data,sex=form.sex.data)
+        person = Pessoa(name=form.name.data,state=form.state.data,birth=form.birth.data,sex=form.sex.data,um_id=current_user.id)
         db.session.add(person)
         db.session.commit()
         flash('New person enry!')
@@ -93,6 +93,12 @@ def regdisease():
         return redirect(url_for('regdisease'))
 
     return render_template("register_consulta.html", title="Consulta")
+
+@login_required
+@app.route("/um_data")
+def umdata():
+    pacients = Pessoa.query.all()
+    return render_template("um_data.html", data=pacients, title="Hospital Data")
 
 @app.route("/logout")
 def logout():

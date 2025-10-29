@@ -12,9 +12,9 @@
             {% endfor %}
         </div>
         <div>
-            {{ form.cep.label }}</br>
-            {{ form.cep(size=8) }}
-            {% for error in form.cep.errors %}
+            {{ form.state.label }}</br>
+            {{ form.state(size=2) }}
+            {% for error in form.state.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>

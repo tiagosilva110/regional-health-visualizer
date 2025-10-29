@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField('Medical Unit', validators=[DataRequired()])
-    cep = StringField('CEP (Only Numbers example: 13188888)', validators=[DataRequired()])
+    state = StringField('State (Example: SP or RJ)', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+<table>
+<caption>Pacient registered in this Unit</caption>
+ <thead>
+            <tr>
+                <th>Name</th>
+                <th>State</th>
+                <th>Birth</th>
+                <th>Sex</th>
+            </tr>
+        </thead>
+<tbody>
+{% for pacient in data %}
+<tr>
+    <td>{{ pacient.name }}</td>
+    <td>{{ pacient.state }}</td>
+    <td>{{ pacient.birth }}</td>
+    <td>{{ pacient.sex }}</td>  
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+</div>
+
+{% endblock %}
