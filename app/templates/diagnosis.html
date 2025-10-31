@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>Register</h1>
+    
     <form method="POST" action="{{ url_for('viewdiagnostico') }}">
         {{ registerform.hidden_tag() }}
         <div>
@@ -21,14 +22,41 @@
         </div>
 
         <div>
-            {{ registerform.doenca_id.label }}</br>
-            {{ registerform.doenca_id(size=32) }}
-            {% for error in registerform.doenca_id.errors %}
+            {{ registerform.doenca.label }}</br>
+            {{ registerform.doenca()}}
+            {% for error in registerform.doenca.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
+
+        
         
         {{ registerform.submit() }}
         
     </form>
+
+    <table>
+    <caption>Diagnosis registered in this Unit</caption>
+    <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Tipo</th>
+                    <th>Pessoa</th>
+                    <th>Medico</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+    <tbody>
+    {% for diagnostico in data %}
+    <tr>
+        <td>{{ diagnostico.id }}</td>
+        <td>{{ diagnostico.doenca }}</td>
+        <td>{{ diagnostico.pessoa.name }}</td>
+        <td>{{ diagnostico.medico.name }}</td>
+        <td>{{ diagnostico.date }}</td>  
+    </tr>
+    {% endfor %}
+    </tbody>
+
+    </table>
 {% endblock%}

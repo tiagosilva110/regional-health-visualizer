@@ -104,46 +104,86 @@
     border-collapse: collapse;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-}
+    }
 
-caption {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #555;
-}
+    caption {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #555;
+    }
 
-thead th {
-    background-color: #ff000026;
-    color: rgb(0, 0, 0);
-    padding: 12px;
-    text-align: left;
-}
+    thead th {
+        background-color: #ff000026;
+        color: rgb(0, 0, 0);
+        padding: 12px;
+        text-align: left;
+    }
 
-tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
+    tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
 
-tbody tr:hover {
-    background-color: #e9ecef;
-}
+    tbody tr:hover {
+        background-color: #e9ecef;
+    }
 
-th, td {
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-}
+    th, td {
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+    }
 
-tfoot td {
-    background-color: #000000;
-    color: white;
-    font-weight: bold;
-    text-align: right;
-    padding: 12px;
-}
+    tfoot td {
+        background-color: #000000;
+        color: white;
+        font-weight: bold;
+        text-align: right;
+        padding: 12px;
+    }
 
-tfoot td:first-child {
-    text-align: left;
-}
+    tfoot td:first-child {
+        text-align: left;
+    }
+
+    .form-container {
+      background-color: #d47373;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 320px;
+      text-align: left;
+    }
+
+    .form-container h2 {
+      color: #00796b;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .form-container label {
+      display: block;
+      color: #ffffff;
+      font-weight: 500;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+
+    .form-container select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-container select:focus {
+      border-color: #00796b;
+      background-color: #ffffff;
+      box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
+    }
   </style>
 <body>
     <header>
@@ -156,7 +196,6 @@ tfoot td:first-child {
     {% if not current_user.is_anonymous %}
     <a href="{{ url_for('viewpessoas')}}">Pessoas</a>
     <a href="{{ url_for('viewmedico')}}">Medicos</a>
-    <a href="{{ url_for('viewdoenca')}}">Doencas</a>
     <a href="{{ url_for('viewdiagnostico')}}">Diagnostico</a>
     {% endif %}
     {% if current_user.is_anonymous %}

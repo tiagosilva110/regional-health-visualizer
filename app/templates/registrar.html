@@ -13,7 +13,7 @@
         </div>
         <div>
             {{ form.state.label }}</br>
-            {{ form.state(size=2) }}
+            {{ form.state() }}
             {% for error in form.state.errors %}
                 <span>{{ error }}</span>
             {% endfor %}

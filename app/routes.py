@@ -3,9 +3,10 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db
 import sqlalchemy as sa
-from app.models import UM, Pessoa, Medico, Diagnostico, Doenca
+from datetime import datetime
+from app.models import UM, Pessoa, Medico, Diagnostico
 from urllib.parse import urlsplit
-from app.forms import LoginForm, RegisterMedic, RegistrationForm, RegisterPerson, RegisterDiagnosis, RegisterDisease, DeletePersonById, SearchPersonByName, DeleteMedicByCRM, DeleteDiseaseById
+from app.forms import LoginForm, RegisterMedic, RegistrationForm, RegisterPerson, RegisterDiagnosis, DeletePersonById, SearchPersonByName, DeleteMedicByCRM
 
 @app.route('/')
 @app.route('/index')
@@ -87,38 +88,17 @@ def viewmedico():
     return render_template("medic.html", title="Register Medic", registerform=registerform, deleteform=deleteform, data=medico)
 
 @login_required
-@app.route("/doenca", methods=['GET', 'POST'])
-def viewdoenca():
-    registerform = RegisterDisease()
-    deleteform = DeleteDiseaseById()
-    doencas = Doenca.query.all()
-    if registerform.validate_on_submit():
-        doenca = Doenca(tipo=registerform.type.data)
-        db.session.add(doenca)
-        db.session.commit()
-        flash('New disease enry!')
-        return redirect(url_for('viewdisease'))
-    if deleteform.validate_on_submit():
-        doenca = Doenca(tipo=deleteform.type.data)
-        db.session.add(doenca)
-        db.session.commit()
-        flash('New disease enry!')
-        return redirect(url_for('viewdisease'))
-
-    return render_template("disease.html", title="Consulta", registerform=registerform, deleteform=deleteform, data=doencas)
-
-@login_required
-@app.route("/diagnostico")
+@app.route("/diagnostico", methods=['GET','POST'])
 def viewdiagnostico():
-    diagnosis = Diagnostico.query.all()
+    dados = Diagnostico.query.all()
     registerform = RegisterDiagnosis()
     if registerform.validate_on_submit():
-        doenca = Doenca(tipo=registerform.type.data)
-        db.session.add(doenca)
+        diagnostico = Diagnostico(medico_crm=registerform.medico_crm.data,pessoa_id=registerform.pessoa_id.data, doenca=registerform.doenca.data, date=datetime.now())
+        db.session.add(diagnostico)
         db.session.commit()
         flash('New disease enry!')
-        return redirect(url_for('viewdisease'))
-    return render_template("diagnosis.html", registerform= registerform,data=diagnosis, title="Hospital Data")
+        return redirect(url_for('viewdiagnostico'))
+    return render_template("diagnosis.html", registerform= registerform,data=dados, title="Hospital Data")
 
 @app.route("/logout")
 def logout():

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField, DateField
+from wtforms import SelectField, StringField, PasswordField, BooleanField, TextAreaField, SubmitField, DateField
 from wtforms.validators import ValidationError, DataRequired, Length, EqualTo
 from app import db
 from app.models import UM
@@ -14,7 +14,36 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField('Medical Unit', validators=[DataRequired()])
-    state = StringField('State (Example: SP or RJ)', validators=[DataRequired()])
+    state = SelectField(
+            'UF',
+            choices=[('AC', 'AC'),  
+                        ('AL', 'AL'),  
+                        ('AP', 'AP'), 
+                        ('AM', 'AM'),
+                        ('BA', 'BA'), 
+                        ('CE', 'CE'), 
+                        ('DF', 'DF'), 
+                        ('ES', 'ES'),
+                        ('GO', 'GO'),  
+                        ('MA', 'MA'), 
+                        ('MT', 'MT'), 
+                        ('MS', 'MS'), 
+                        ('MG', 'MG'), 
+                        ('PA', 'PA'), 
+                        ('PB', 'PB'),  
+                        ('PR', 'PR'), 
+                        ('PE', 'PE'),
+                        ('PI', 'PI'),
+                        ('RJ', 'RJ'),
+                        ('RN', 'RN'),  
+                        ('RS', 'RS'),  
+                        ('RO', 'RO'),  
+                        ('RR', 'RR'),  
+                        ('SC', 'SC'),  
+                        ('SP', 'SP'),  
+                        ('SE', 'SE'),  
+                        ('TO', 'TO')],
+            validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
@@ -27,9 +56,43 @@ class RegistrationForm(FlaskForm):
         
 class RegisterPerson(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    state = StringField('State (example: SP)', validators=[DataRequired()])
+    state = SelectField(
+            'UF',
+            choices=[('AC', 'AC'),  
+                        ('AL', 'AL'),  
+                        ('AP', 'AP'), 
+                        ('AM', 'AM'),
+                        ('BA', 'BA'), 
+                        ('CE', 'CE'), 
+                        ('DF', 'DF'), 
+                        ('ES', 'ES'),
+                        ('GO', 'GO'),  
+                        ('MA', 'MA'), 
+                        ('MT', 'MT'), 
+                        ('MS', 'MS'), 
+                        ('MG', 'MG'), 
+                        ('PA', 'PA'), 
+                        ('PB', 'PB'),  
+                        ('PR', 'PR'), 
+                        ('PE', 'PE'),
+                        ('PI', 'PI'),
+                        ('RJ', 'RJ'),
+                        ('RN', 'RN'),  
+                        ('RS', 'RS'),  
+                        ('RO', 'RO'),  
+                        ('RR', 'RR'),  
+                        ('SC', 'SC'),  
+                        ('SP', 'SP'),  
+                        ('SE', 'SE'),  
+                        ('TO', 'TO')],
+            validators=[DataRequired()])
     birth = DateField('Birth Date', format='%Y-%m-%d', validators=[DataRequired()])
-    sex = StringField('Sex (M,F or O)', validators=[DataRequired()])
+    sex = SelectField(
+            'Sex',
+            choices=[('M', 'M'),
+                     ('F','F')  
+                        ],
+            validators=[DataRequired()])
     submit = SubmitField('Register')
 
 class DeletePersonById(FlaskForm):
@@ -45,6 +108,7 @@ class RegisterMedic(FlaskForm):
     crm = StringField('Crm', validators=[DataRequired()])
     submit = SubmitField('Register')
 
+
 class DeleteMedicByCRM(FlaskForm):
     crm = StringField('crm', validators=[DataRequired()])
     submit = SubmitField('Delete')
@@ -52,13 +116,17 @@ class DeleteMedicByCRM(FlaskForm):
 class RegisterDiagnosis(FlaskForm):
     pessoa_id = StringField('id pessoa', validators=[DataRequired()])
     medico_crm = StringField('crm medico', validators=[DataRequired()])
-    doenca_id = StringField('id doenca', validators=[DataRequired()])
-    submit = SubmitField('Register')
+    doenca = SelectField(
+            'Selecione o diagnostico',
+            choices=[
+            ('alzheimer', 'alzheimer'),
+            ('asma', 'asma'),
+            ('dengue', 'dengue'),
+            ('diabetes', 'diabetes'),
+            ('hipertensao', 'hipertensao'),
+            ('hiv', 'hiv'),
+            ('parkinson', 'parkinson')
+            ],
 
-class RegisterDisease(FlaskForm):
-    type = StringField('Type', validators=[DataRequired()])
+            validators=[DataRequired()])
     submit = SubmitField('Register')
-    
-class DeleteDiseaseById(FlaskForm):
-    id = StringField('id', validators=[DataRequired()])
-    submit = SubmitField('Delete')

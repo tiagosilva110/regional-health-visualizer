@@ -6,7 +6,7 @@
         {{ registerform.hidden_tag() }}
         <div>
             {{ registerform.name.label }}</br>
-            {{ registerform.name(size=32) }}
+            {{ registerform.name() }}
             {% for error in registerform.name.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
@@ -20,14 +20,14 @@
         </div>
         <div>
             {{ registerform.state.label }}</br>
-            {{ registerform.state(size=2) }}
+            {{ registerform.state() }}
             {% for error in registerform.state.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         <div>
             {{ registerform.sex.label }}</br>
-            {{ registerform.sex(size=1) }}
+            {{ registerform.sex() }}
             {% for error in registerform.sex.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
@@ -36,6 +36,7 @@
         {{ registerform.submit() }}
         
     </form>
+    </div>
 
     <h1>Delete</h1>
     <form method="POST" action="{{ url_for('viewpessoas') }}">

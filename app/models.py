@@ -27,6 +27,7 @@ class Medico(db.Model):
     crm: so.Mapped[str] = so.mapped_column(sa.String(16), primary_key=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(32))
     um_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
+    diagnosticos = db.relationship('Diagnostico', back_populates='medico')
 
 class Pessoa(db.Model):
     __tablename__ = 'pessoa'
@@ -36,23 +37,17 @@ class Pessoa(db.Model):
     sex: so.Mapped[str] = so.mapped_column(sa.String(1))
     state: so.Mapped[str] = so.mapped_column(sa.String(2))
     um_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
-
-
-class Doenca(db.Model):
-    __tablename__ = 'doenca'
-    id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    tipo: so.Mapped[str] = so.mapped_column(sa.String(32))
-
-    def getById(id):
-        return None
+    diagnosticos = db.relationship('Diagnostico', back_populates='pessoa')
 
 class Diagnostico(db.Model):
     __tablename__ = 'diagnostico'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    date: so.Mapped[datetime.date] = so.mapped_column(sa.Date)
+    date: so.Mapped[datetime.date] = so.mapped_column(sa.DateTime)
     medico_crm: so.Mapped[int] = so.mapped_column(ForeignKey("medico.crm"), nullable=True)
     pessoa_id: so.Mapped[int] = so.mapped_column(ForeignKey("pessoa.id"), nullable=True)
-    doenca_id: so.Mapped[int] = so.mapped_column(ForeignKey("doenca.id"),nullable=True)
+    doenca: so.Mapped[str] = so.mapped_column(sa.String(16))
+    pessoa = db.relationship('Pessoa', back_populates='diagnosticos')
+    medico = db.relationship('Medico', back_populates='diagnosticos')
 
 @login.user_loader
 def load_user(id):
