@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form method="POST" action="{{ url_for('viewmedico') }}">
+        {{ registerform.hidden_tag() }}
+        <div>
+            {{ registerform.name.label }}</br>
+            {{ registerform.name(size=32) }}
+            {% for error in registerform.name.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ registerform.crm.label }}</br>
+            {{ registerform.crm() }}
+            {% for error in registerform.crm.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        {{ registerform.submit() }}
+        
+    </form>
+
+    <h1>Delete</h1>
+    <form method="POST" action="{{ url_for('viewmedico') }}">
+        {{ deleteform.hidden_tag() }}
+        <div>
+            {{ deleteform.crm.label }}</br>
+            {{ deleteform.crm(size=32) }}
+            {% for error in deleteform.crm.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        {{ deleteform.submit() }}
+        
+    </form>
+
+<div>
+    <table>
+    <caption>Medics registered in this Unit</caption>
+        <thead>
+                    <tr>
+                        <th>Crm</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+        <tbody>
+        {% for medic in data %}
+        <tr>
+            <td>{{ medic.crm }}</td>  
+            <td>{{ medic.name }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock%}

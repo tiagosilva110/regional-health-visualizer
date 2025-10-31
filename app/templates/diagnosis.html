@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form method="POST" action="{{ url_for('viewdiagnostico') }}">
+        {{ registerform.hidden_tag() }}
+        <div>
+            {{ registerform.pessoa_id.label }}</br>
+            {{ registerform.pessoa_id(size=32) }}
+            {% for error in registerform.pessoa_id.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ registerform.medico_crm.label }}</br>
+            {{ registerform.medico_crm(size=32) }}
+            {% for error in registerform.medico_crm.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ registerform.doenca_id.label }}</br>
+            {{ registerform.doenca_id(size=32) }}
+            {% for error in registerform.doenca_id.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        {{ registerform.submit() }}
+        
+    </form>
+{% endblock%}

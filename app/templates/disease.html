@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form method="POST" action="{{ url_for('viewdoenca') }}">
+        {{ registerform.hidden_tag() }}
+        <div>
+            {{ registerform.type.label }}</br>
+            {{ registerform.type(size=16) }}
+            {% for error in registerform.type.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        {{ registerform.submit() }}
+        
+    </form>
+    <h1>Delete</h1>
+    <form method="POST" action="{{ url_for('viewdoenca') }}">
+        {{ deleteform.hidden_tag() }}
+        <div>
+            {{ deleteform.id.label }}</br>
+            {{ deleteform.id(size=16) }}
+            {% for error in deleteform.id.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        {{ deleteform.submit() }}
+        
+    </form>
+
+    <div>
+        <table>
+        <caption>Doencas Registradas</caption>
+        <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Tipo</th>
+                    </tr>
+                </thead>
+        <tbody>
+        {% for doenca in data %}
+        <tr>
+            <td>{{ doenca.id }}</td>
+            <td>{{ doenca.tipo }}</td>  
+        </tr>
+        {% endfor %}
+        </tbody>
+
+        </table>
+    </div>
+{% endblock%}

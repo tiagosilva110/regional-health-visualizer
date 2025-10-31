@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form method="POST" action="{{ url_for('viewpessoas') }}">
+        {{ registerform.hidden_tag() }}
+        <div>
+            {{ registerform.name.label }}</br>
+            {{ registerform.name(size=32) }}
+            {% for error in registerform.name.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ registerform.birth.label }}</br>
+            {{ registerform.birth() }}
+            {% for error in registerform.birth.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ registerform.state.label }}</br>
+            {{ registerform.state(size=2) }}
+            {% for error in registerform.state.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ registerform.sex.label }}</br>
+            {{ registerform.sex(size=1) }}
+            {% for error in registerform.sex.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        {{ registerform.submit() }}
+        
+    </form>
+
+    <h1>Delete</h1>
+    <form method="POST" action="{{ url_for('viewpessoas') }}">
+        {{ deleteform.hidden_tag() }}
+        <div>
+            {{ deleteform.id.label }}</br>
+            {{ deleteform.id(size=32) }}
+            {% for error in deleteform.id.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        {{ deleteform.submit() }}
+        
+    </form>
+
+<div>
+    <table>
+    <caption>Pacients registered in this Unit</caption>
+    <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>State</th>
+                    <th>Birth</th>
+                    <th>Sex</th>
+                </tr>
+            </thead>
+    <tbody>
+    {% for pacient in data %}
+    <tr>
+        <td>{{ pacient.id }}</td>
+        <td>{{ pacient.name }}</td>
+        <td>{{ pacient.state }}</td>
+        <td>{{ pacient.birth }}</td>
+        <td>{{ pacient.sex }}</td>  
+    </tr>
+    {% endfor %}
+    </tbody>
+
+    </table>
+</div>
+{% endblock%}

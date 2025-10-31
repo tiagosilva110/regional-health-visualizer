@@ -152,14 +152,12 @@ tfoot td:first-child {
   </header>
 
   <nav>
-    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('index') }}">Graficos</a>
     {% if not current_user.is_anonymous %}
-    <a href="{{ url_for('regperson')}}">Register pacient</a>
-    <a href="{{ url_for('regdiagnosis')}}">Register diagnosis</a>
-    <a href="{{ url_for('regdisease')}}">Register disease</a>
-    <a href="{{ url_for('regmedic')}}">Register medic</a>
-    <a href="{{ url_for('umdata')}}">Pacients Controller</a>
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="{{ url_for('viewpessoas')}}">Pessoas</a>
+    <a href="{{ url_for('viewmedico')}}">Medicos</a>
+    <a href="{{ url_for('viewdoenca')}}">Doencas</a>
+    <a href="{{ url_for('viewdiagnostico')}}">Diagnostico</a>
     {% endif %}
     {% if current_user.is_anonymous %}
     <a href="{{ url_for('login') }}">Login</a>

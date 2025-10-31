@@ -37,6 +37,7 @@ class Pessoa(db.Model):
     state: so.Mapped[str] = so.mapped_column(sa.String(2))
     um_id: so.Mapped[int] = so.mapped_column(ForeignKey("um.id"), nullable=True)
 
+
 class Doenca(db.Model):
     __tablename__ = 'doenca'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)

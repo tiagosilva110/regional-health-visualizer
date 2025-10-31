@@ -32,16 +32,33 @@ class RegisterPerson(FlaskForm):
     sex = StringField('Sex (M,F or O)', validators=[DataRequired()])
     submit = SubmitField('Register')
 
+class DeletePersonById(FlaskForm):
+    id = StringField('id', validators=[DataRequired()])
+    submit = SubmitField('Delete')
+
+class SearchPersonByName(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Delete')
+
 class RegisterMedic(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     crm = StringField('Crm', validators=[DataRequired()])
     submit = SubmitField('Register')
 
+class DeleteMedicByCRM(FlaskForm):
+    crm = StringField('crm', validators=[DataRequired()])
+    submit = SubmitField('Delete')
+
 class RegisterDiagnosis(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    medico_crm = StringField('Crm', validators=[DataRequired()])
+    pessoa_id = StringField('id pessoa', validators=[DataRequired()])
+    medico_crm = StringField('crm medico', validators=[DataRequired()])
+    doenca_id = StringField('id doenca', validators=[DataRequired()])
     submit = SubmitField('Register')
 
 class RegisterDisease(FlaskForm):
     type = StringField('Type', validators=[DataRequired()])
+    submit = SubmitField('Register')
     
+class DeleteDiseaseById(FlaskForm):
+    id = StringField('id', validators=[DataRequired()])
+    submit = SubmitField('Delete')
