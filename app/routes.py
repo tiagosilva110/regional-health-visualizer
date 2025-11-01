@@ -1,17 +1,58 @@
 from app import app
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, Response
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db
+from sqlalchemy import func
 import sqlalchemy as sa
 from datetime import datetime
 from app.models import UM, Pessoa, Medico, Diagnostico
 from urllib.parse import urlsplit
-from app.forms import LoginForm, RegisterMedic, RegistrationForm, RegisterPerson, RegisterDiagnosis, DeletePersonById, SearchPersonByName, DeleteMedicByCRM
+from app.forms import LoginForm, RegisterMedic, RegistrationForm, RegisterPerson, RegisterDiagnosis, DeletePersonById, DeleteMedicByCRM
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import io
+import base64
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("index.html")
+    resultados = (
+        db.session.query(Pessoa.state, Diagnostico.doenca, func.count(Diagnostico.id))
+        .join(Diagnostico, Pessoa.id == Diagnostico.pessoa_id)
+        .group_by(Pessoa.state, Diagnostico.doenca)
+        .all()
+    )
+
+    dados_por_estado = {}
+    for estado, doenca, qtd in resultados:
+        if estado not in dados_por_estado:
+            dados_por_estado[estado] = {}
+        dados_por_estado[estado][doenca] = qtd
+
+    graficos = []
+    for estado, dados in dados_por_estado.items():
+        doencas = list(dados.keys())
+        quantidades = list(dados.values())
+
+        figura, eixo = plt.subplots(figsize=(6, 4))
+        eixo.bar(doencas, quantidades, color='red')
+        eixo.set_title(f'Diagnósticos em {estado}')
+        eixo.set_xlabel('Tipo de Doença')
+        eixo.set_ylabel('Quantidade')
+        eixo.set_xticks(range(len(doencas)))
+        eixo.set_xticklabels(doencas, rotation=30, ha='right')
+
+        imagem_em_memoria = io.BytesIO()
+        plt.tight_layout()
+        plt.savefig(imagem_em_memoria, format='png')
+        imagem_em_memoria.seek(0)
+        imagem_base64 = base64.b64encode(imagem_em_memoria.getvalue()).decode('utf-8')
+        plt.close(figura)
+
+        graficos.append({"estado": estado, "imagem": imagem_base64})
+
+    return render_template('index.html', graficos=graficos)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -48,7 +89,6 @@ def register():
 def viewpessoas():
     registerform = RegisterPerson()
     deleteform = DeletePersonById()
-    searchform = SearchPersonByName()
     pessoas = db.session.scalars(sa.select(Pessoa).where(Pessoa.um_id == current_user.id))
     if registerform.validate_on_submit():
         person = Pessoa(name=registerform.name.data,state=registerform.state.data,birth=registerform.birth.data,sex=registerform.sex.data,um_id=current_user.id)
@@ -64,14 +104,14 @@ def viewpessoas():
         flash('Detectamos uma remoção de pessoa!')
         return redirect(url_for('viewpessoas'))
 
-    return render_template("pacient.html", title="Pacientes", registerform=registerform, deleteform = deleteform, searchform= searchform,data=pessoas)
+    return render_template("pacient.html", title="Pacientes", registerform=registerform, deleteform = deleteform,data=pessoas)
 
 @login_required
 @app.route("/medico", methods=['GET', 'POST'])
 def viewmedico():
     registerform = RegisterMedic()
     deleteform = DeleteMedicByCRM()
-    medico = Medico.query.all()
+    medico = db.session.scalars(sa.select(Medico).where(Medico.um_id == current_user.id))
     if registerform.validate_on_submit():
         medico = Medico(name=registerform.name.data, crm=registerform.crm.data, um_id=current_user.id)
         db.session.add(medico)
@@ -99,6 +139,7 @@ def viewdiagnostico():
         flash('New disease enry!')
         return redirect(url_for('viewdiagnostico'))
     return render_template("diagnosis.html", registerform= registerform,data=dados, title="Hospital Data")
+
 
 @app.route("/logout")
 def logout():

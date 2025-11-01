@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Essa pagina esta destinada a vizualização no mapa</h1>
+    {% for grafico in graficos %}
+        <div class="grafico">
+            <h2>{{ grafico.estado }}</h2>
+            <img src="data:image/png;base64,{{ grafico.imagem }}" alt="Gráfico {{ grafico.estado }}">
+        </div>
+    {% endfor %}
 {% endblock %}
 

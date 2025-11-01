@@ -99,10 +99,6 @@ class DeletePersonById(FlaskForm):
     id = StringField('id', validators=[DataRequired()])
     submit = SubmitField('Delete')
 
-class SearchPersonByName(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    submit = SubmitField('Delete')
-
 class RegisterMedic(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     crm = StringField('Crm', validators=[DataRequired()])
